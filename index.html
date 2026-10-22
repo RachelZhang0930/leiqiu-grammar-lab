@@ -341,6 +341,23 @@ footer{color:#74808a}
 .v27-selector{display:flex;flex-wrap:wrap;gap:8px;}
 .v27-selector button{font-size:13px;padding:9px 11px;white-space:normal;text-align:center;}
 @media(max-width:700px){.v45-voice-grid .v46-mini-svg{max-width:126px;height:72px}.v27-selector{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.v27-selector button{font-size:12px;padding:9px 7px}}
+</style><style id="v48-tense-focus-style">
+.tense-focus-sentence{line-height:1.65!important}
+.tense-focus-sentence mark{color:#293c56;box-decoration-break:clone;-webkit-box-decoration-break:clone;border-radius:5px;padding:0 .07em;font-weight:750}
+.tense-focus-sentence mark.tense-focus-verb{background:#ffc9a8;color:#8b3b1f;box-shadow:inset 0 -2px 0 #de8758}
+.tense-focus-sentence mark.tense-focus-clue{background:#ffeaa9;color:#755219;box-shadow:inset 0 -2px 0 #d7ad4b}
+.tense-key-signals{background:#fffbf5;border:1px solid #eacfb0;border-radius:15px;padding:16px 19px;margin:14px 0 18px}
+.tense-key-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#935c35;font-size:16px;margin-bottom:9px}
+.tense-key-legend{font-size:12px;color:#60706d;font-weight:400;display:inline-flex;align-items:center;gap:5px}
+.tense-key-legend i,.tense-key-legend b{display:inline-block;width:12px;height:12px;border-radius:3px}
+.tense-key-legend i{background:#ffc9a8}.tense-key-legend b{background:#ffeaa9}
+.tense-key-sub{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:9px;font-size:13px;color:#53627a}
+.tense-key-chip,.tense-key-current{display:inline-block;border-radius:7px;padding:4px 8px;font-weight:650;background:#f4eee5;color:#765d43}
+.tense-key-current{background:#ffeaa9;color:#765219}
+.tense-key-signals p{font-size:12px;color:#738079;line-height:1.55;margin:12px 0 0}
+#app .layout > .panel > #labAnalysis{margin:16px 0 20px;padding:16px 19px;scroll-margin-top:130px}
+#app .layout > .panel > #labAnalysis .syntax-original{font-size:clamp(19px,2vw,27px)}
+@media(max-width:760px){.tense-key-signals{padding:12px}.tense-key-heading{font-size:14px}#app .layout > .panel > #labAnalysis{padding:12px}}
 </style></head><body><header><a class="brand" href="#home">LEIQIU <b>LAB</b><small>蕾丘英语 · 语法实验室</small></a><nav aria-label="主导航"><a href="#home" class="nav-home" aria-label="返回主页">⌂ 主页</a><a href="#guide">使用指南</a><a href="#explorer">时态与语态</a><a href="#predicate">谓语 / 非谓语实验</a><a href="#clause">从句与句式</a><a href="#sentence">长难句解剖</a><a href="#gaokao">语法综合</a></nav><button id="teacherToggle" aria-pressed="false">教师模式</button></header><div id="teacherBar" hidden></div><main id="app"></main><footer><span>LEIQIU ENGLISH · 让英语语法变得看得见。</span><span>离线可用 / 本地保存 / 零 AI API</span></footer><script>
 'use strict';
 window.QUESTIONS = [
@@ -885,7 +902,56 @@ function v37Sidebar(){
  const groups=[['现在系列',['一般现在时','现在进行时','现在完成时','现在完成进行时']],['过去系列',['一般过去时','过去进行时','过去完成时','过去完成进行时']],['将来系列',['一般将来时','将来进行时','将来完成时','将来完成进行时']],['过去将来系列',['过去将来时','过去将来进行时','过去将来完成时','过去将来完成进行时']]];
  return `<aside class="scene-tabs v37-sidebar" aria-label="选择时态">${groups.map(([label,names],gi)=>`<div class="v37-group"><div class="v37-group-title">${['01','02','03','04'][gi]} · ${label}</div>${names.map(n=>{const i=SCENES.findIndex(t=>t.name===n),t=SCENES[i];return `<button data-scene="${i}" class="${scene===i?'selected':''}" aria-pressed="${scene===i}">${n}<small>${t.en}<span class="v37-level">${t.level|| (['将来完成时','过去完成进行时'].includes(n)?'进阶':'核心')}</span></small></button>`}).join('')}</div>`).join('')}<div class="v45-voice-label">05 · 语态与综合</div><button class="compare-tab ${scene===SCENES.length+1?'selected':''}" data-scene="${SCENES.length+1}" aria-pressed="${scene===SCENES.length+1}">主动与被动语态<small>Active & Passive</small></button><button class="compare-tab ${scene===SCENES.length+2?'selected':''}" data-scene="${SCENES.length+2}" aria-pressed="${scene===SCENES.length+2}">时态与语态综合辨析<small>Mixed Tense & Voice</small></button><button class="compare-tab ${scene===SCENES.length?'selected':''}" data-scene="${SCENES.length}" aria-pressed="${scene===SCENES.length}">易混时态对比<small>Compare & Discover</small></button></aside>`;
 }
-function explorer(){if(scene===SCENES.length){return title('时态探索','Tense Explorer','从规则到比较')+`<div class="layout">${v37Sidebar()}<section class="panel"><section class="v27-comparison" aria-label="易混时态对比实验"><div class="v27-head"><div><span class="v27-kicker">COMPARE & DISCOVER · 时态对比实验</span><h2>同一个科技节项目，为什么要换时态？</h2><p>先看两句话表达的时间重点，再点击切换另一组对比。</p></div></div><div class="v27-selector" role="group" aria-label="选择时态对比"><button type="button" data-v27-compare="past" aria-pressed="true" class="is-active">一般过去 vs 现在完成</button><button type="button" data-v27-compare="continuous" aria-pressed="false">一般过去 vs 过去进行</button><button type="button" data-v27-compare="perfect" aria-pressed="false">现在完成 vs 现在完成进行</button><button type="button" data-v27-compare="pastPerfect" aria-pressed="false">一般过去 vs 过去完成</button><button type="button" data-v27-compare="futureContinuous" aria-pressed="false">一般将来 vs 将来进行</button><button type="button" data-v27-compare="futurePerfect" aria-pressed="false">一般将来 vs 将来完成</button><button type="button" data-v27-compare="pastFuture" aria-pressed="false">一般将来 vs 过去将来</button><button type="button" data-v27-compare="pastPerfectContinuous" aria-pressed="false">过去完成 vs 过去完成进行</button></div><div id="v27-compare-body" aria-live="polite"></div></section></section></div>`;}const s=SCENES[scene],p=positions[scene]||{start:s.start,ref:s.ref};const deep=[0,1,3,5].includes(scene);const end=scene===1?s.end:scene===5?p.start+5:deep?p.start+15:s.end;let valid=true,msg='';if(scene===0){valid=p.start<50;msg='昨天的动作必须完整位于现在之前。'}if(scene===3){valid=p.start<60;msg='动作发生在现在之前，结果保留到现在。'}if(scene===1){valid=p.start<p.ref&&p.ref<end&&p.ref<60;msg='老师走进来的时刻应落在“正在贴海报”的区间内部。'}if(scene===5){valid=p.start<p.ref&&p.ref<60;msg='贴好海报必须早于评委到达。'}return title('时态探索','Tense Explorer','统一情境：学校科技节展板展示')+`<div class="layout">${v37Sidebar()}<section class="panel"><span class="tag">统一场景 · 从同一科技节故事看时间关系</span><div class="english">${esc(s.sentence)}</div><p class="muted">${s.structure}</p>${pictureV21(scene)}${knowledgePanel(s)}<p class="muted">图示只服务于当前句意；图和句子已按同一情境设计，便于横向比较各类时态。</p><div class="actions"><button data-action="analysis">${step>=4?'收起':'展示'}分析</button><button data-action="resetExp">重置实验</button></div>${(teacher&&reveal)||step>0?`<div class="details">${[['事件发生时间',s.event],['时间参照点',s.reference],['动作状态',s.status],['教学重点',s.focus]].filter((_,i)=>teacher&&reveal||i<step).map(([k,v])=>`<div class="detail"><small>${k}</small>${v}</div>`).join('')}</div><p class="muted">对比：${s.compare}</p>`:''}<fieldset><legend>即时检查 · ${s.check}</legend>${s.options.map((o,i)=>`<label class="option"><input type="radio" name="check" value="${i}">${o}</label>`).join('')}</fieldset><button class="primary" data-action="check">验证理解</button>${sceneResult!==null||teacher&&reveal?`<div class="feedback ${sceneResult===s.answer?'good':''}" role="status">${sceneResult!==null?(sceneResult===s.answer?'判断正确。':'再看参照点与动作状态。'):''}答案：${esc(s.options[s.answer])}。${s.focus}</div>`:''}</section></div>${tenseTransferPanel(scene)}`}
+
+const TENSE_VISUAL_FOCUS = {
+ '一般现在时': ['prepares','every year'],
+ '现在进行时': ['are putting up','Look!|now'],
+ '现在完成时': ['have finished','now'],
+ '现在完成进行时': ['have been preparing','for three hours|still'],
+ '一般过去时': ['finished','yesterday'],
+ '过去进行时': ['were putting up','when'],
+ '过去完成时': ['had finished','By the time'],
+ '过去完成进行时': ['had been working','By the time|for three hours'],
+ '一般将来时': ['will present','tomorrow'],
+ '将来进行时': ['will be presenting','This time tomorrow'],
+ '将来完成时': ['will have completed','By tomorrow morning'],
+ '将来完成进行时': ['will have been preparing','By noon tomorrow|for three days'],
+ '过去将来时': ['would present','said|the next day'],
+ '过去将来进行时': ['would be presenting','said|the next morning'],
+ '过去将来完成时': ['would have finished','predicted|by the following morning'],
+ '过去将来完成进行时': ['would have been preparing','On Monday|by Friday afternoon|for nearly five days']
+};
+function tenseFocusMarkup(sc){
+ const [verb,clueStr]=TENSE_VISUAL_FOCUS[sc.name]||[];
+ const raw=sc.sentence;
+ if(!verb || !raw.includes(verb))return esc(raw);
+ const cues=(clueStr||'').split('|').filter(x=>raw.toLowerCase().includes(x.toLowerCase()));
+ const pieces=[{text:verb,kind:'verb'},...cues.map(text=>({text,kind:'clue'}))].sort((a,b)=>b.text.length-a.text.length);
+ let ranges=[];
+ for(const item of pieces){
+  const at=raw.toLowerCase().indexOf(item.text.toLowerCase());
+  if(at<0 || ranges.some(r=>at<r.end && at+item.text.length>r.start))continue;
+  ranges.push({start:at,end:at+item.text.length,kind:item.kind});
+ }
+ ranges.sort((a,b)=>a.start-b.start);
+ let output='',last=0;
+ for(const r of ranges){output+=esc(raw.slice(last,r.start));output+=`<mark class="tense-focus-${r.kind}">${esc(raw.slice(r.start,r.end))}</mark>`;last=r.end;}
+ return output+esc(raw.slice(last));
+}
+function tenseSignalFocus(sc){
+ const g=(window.TENSE_GUIDES||{})[sc.name];
+ const markers=g?.signals||[];
+ const key=TENSE_VISUAL_FOCUS[sc.name];
+ const inSentence=key?key[1].split('|').filter(x=>sc.sentence.toLowerCase().includes(x.toLowerCase())):[];
+ return `<aside class="tense-key-signals" aria-label="时态标志词重点">
+ <div class="tense-key-heading"><strong>先找时间线索，再判断时态</strong><span class="tense-key-legend"><i></i>时态动词　<b></b>时间提示</span></div>
+ <div class="tense-key-sub"><b>本句线索：</b>${inSentence.length?inSentence.map(x=>`<span class="tense-key-current">${esc(x)}</span>`).join(''):'需要结合完整句意判断'}</div>
+ <div class="tense-key-sub"><b>常见标志词：</b>${markers.map(x=>`<span class="tense-key-chip">${esc(x)}</span>`).join('')}</div>
+ <p>注意：标志词提供时间线索，真正选时态还需判断参照点、动作先后和是否持续。</p>
+ </aside>`;
+}
+
+function explorer(){if(scene===SCENES.length){return title('时态探索','Tense Explorer','从规则到比较')+`<div class="layout">${v37Sidebar()}<section class="panel"><section class="v27-comparison" aria-label="易混时态对比实验"><div class="v27-head"><div><span class="v27-kicker">COMPARE & DISCOVER · 时态对比实验</span><h2>同一个科技节项目，为什么要换时态？</h2><p>先看两句话表达的时间重点，再点击切换另一组对比。</p></div></div><div class="v27-selector" role="group" aria-label="选择时态对比"><button type="button" data-v27-compare="past" aria-pressed="true" class="is-active">一般过去 vs 现在完成</button><button type="button" data-v27-compare="continuous" aria-pressed="false">一般过去 vs 过去进行</button><button type="button" data-v27-compare="perfect" aria-pressed="false">现在完成 vs 现在完成进行</button><button type="button" data-v27-compare="pastPerfect" aria-pressed="false">一般过去 vs 过去完成</button><button type="button" data-v27-compare="futureContinuous" aria-pressed="false">一般将来 vs 将来进行</button><button type="button" data-v27-compare="futurePerfect" aria-pressed="false">一般将来 vs 将来完成</button><button type="button" data-v27-compare="pastFuture" aria-pressed="false">一般将来 vs 过去将来</button><button type="button" data-v27-compare="pastPerfectContinuous" aria-pressed="false">过去完成 vs 过去完成进行</button></div><div id="v27-compare-body" aria-live="polite"></div></section></section></div>`;}const s=SCENES[scene],p=positions[scene]||{start:s.start,ref:s.ref};const deep=[0,1,3,5].includes(scene);const end=scene===1?s.end:scene===5?p.start+5:deep?p.start+15:s.end;let valid=true,msg='';if(scene===0){valid=p.start<50;msg='昨天的动作必须完整位于现在之前。'}if(scene===3){valid=p.start<60;msg='动作发生在现在之前，结果保留到现在。'}if(scene===1){valid=p.start<p.ref&&p.ref<end&&p.ref<60;msg='老师走进来的时刻应落在“正在贴海报”的区间内部。'}if(scene===5){valid=p.start<p.ref&&p.ref<60;msg='贴好海报必须早于评委到达。'}return title('时态探索','Tense Explorer','统一情境：学校科技节展板展示')+`<div class="layout">${v37Sidebar()}<section class="panel"><span class="tag">统一场景 · 从同一科技节故事看时间关系</span><div class="english tense-focus-sentence">${tenseFocusMarkup(s)}</div><p class="muted">${s.structure}</p>${tenseSignalFocus(s)}${pictureV21(scene)}${knowledgePanel(s)}<p class="muted">图示只服务于当前句意；图和句子已按同一情境设计，便于横向比较各类时态。</p><div class="actions"><button data-action="analysis">${step>=4?'收起':'展示'}分析</button><button data-action="resetExp">重置实验</button></div>${(teacher&&reveal)||step>0?`<div class="details">${[['事件发生时间',s.event],['时间参照点',s.reference],['动作状态',s.status],['教学重点',s.focus]].filter((_,i)=>teacher&&reveal||i<step).map(([k,v])=>`<div class="detail"><small>${k}</small>${v}</div>`).join('')}</div><p class="muted">对比：${s.compare}</p>`:''}<fieldset><legend>即时检查 · ${s.check}</legend>${s.options.map((o,i)=>`<label class="option"><input type="radio" name="check" value="${i}">${o}</label>`).join('')}</fieldset><button class="primary" data-action="check">验证理解</button>${sceneResult!==null||teacher&&reveal?`<div class="feedback ${sceneResult===s.answer?'good':''}" role="status">${sceneResult!==null?(sceneResult===s.answer?'判断正确。':'再看参照点与动作状态。'):''}答案：${esc(s.options[s.answer])}。${s.focus}</div>`:''}</section></div>${tenseTransferPanel(scene)}`}
 function optionList(q,name,chosen){return q.options.map((o,i)=>`<label class="option ${chosen===i?'selected':''}"><input type="radio" name="${name}" value="${i}" ${chosen===i?'checked':''}><span class="letter">${'ABCD'[i]}</span>${esc(o)}</label>`).join('')}
 function explained(q,choice,all=false){return `<div class="feedback ${choice===q.correctIndex?'good':''}" role="status"><strong>${choice===null?'教师解析':choice===q.correctIndex?'✓ 判断正确':'请重新检查时间关系'}</strong><p>目标答案：${'ABCD'[q.correctIndex]} · ${esc(q.options[q.correctIndex])}</p><p>${q.tense} · ${q.explanation}</p>${all?`<ul>${q.optionReasons.map((r,i)=>`<li>${'ABCD'[i]}：${esc(r)}</li>`).join('')}</ul>`:''}</div>`}
 function challenge(){const list=practice?practiceIds.map(id=>QUESTIONS.find(q=>q.id===id)):QUESTIONS;if(!list.length)return title('错题复测','Error Repair','仅复测本次首答错题')+'<div class="panel empty">本次没有首答错题。</div>';qi=Math.min(qi,list.length-1);const q=list[qi],answer=practice?reviewAnswers[q.id]:LabStore.data.first[q.id];const shown=!!answer||teacher&&reveal;const chosen=selection!==null?selection:answer?.choice;const sentence=shown?esc(q.sentence).replace(esc(q.clue),`<mark>${esc(q.clue)}</mark>`):esc(q.sentence);return title(practice?'错题复测':'时态挑战','Grammar Challenge',practice?'复测单独保存，首次成绩不变':'首次提交计入成绩，复习不覆盖首答')+`<div class="quiz panel">${teacher?'<div class="teacher-note">教师演示不计入学生成绩；退出后未提交题目恢复隐藏。</div>':''}<div class="quiz-top"><span>${practice?'复测':'课堂练习'} / ${String(qi+1).padStart(2,'0')} OF ${list.length}</span><span>已提交 ${practice?Object.keys(reviewAnswers).length:Object.keys(LabStore.data.first).length} / ${list.length}</span></div><div class="progress"><span style="width:${100*(qi+1)/list.length}%"></span></div><p class="muted">${q.difficulty}${q.id===11?' · 目标情境：开门时，做饭正在进行。':''}</p><div class="english">${sentence}</div><fieldset><legend>选择最符合目标语境的形式</legend>${optionList(q,'quiz',chosen)}</fieldset><button class="primary" data-action="submitQuiz">${answer?'再次验证（复习）':'提交答案'}</button>${shown?explained(q,answer?.choice??null):''}<div class="quiz-nav"><button data-action="prev" ${qi===0?'disabled':''}>← 上一题</button><button data-go="repair">查看学习诊断</button>${practice?'<button data-action="exitPractice">返回首答练习</button>':''}<button data-action="next" ${qi===list.length-1?'disabled':''}>下一题 →</button></div>${practice?'<p class="muted">复测沿用原题，不预先展示答案。已提交的题目可回看。</p>':''}</div>`}
@@ -1171,7 +1237,14 @@ function sharedAnalysisMarkup(item){
  </section>`;
 }
 function placeSharedAnalysis(){
+ // 时态讲解已提供高亮动词、时间线索和场景说明，不重复显示句子结构分析板。
+ if(page()==='explorer')return;
  const item=currentLabAnalysis();if(!item)return;
+ if(page()==='explorer' && scene<SCENES.length){
+   const panel=document.querySelector('#app .layout > .panel');
+   const diagram=panel?.querySelector('.v37-diagram');
+   if(panel && diagram){diagram.insertAdjacentHTML('beforebegin',sharedAnalysisMarkup(item));return;}
+ }
  const pageTitle=document.querySelector('#app > .page-title');
  if(pageTitle)pageTitle.insertAdjacentHTML('afterend',sharedAnalysisMarkup(item));
 }
